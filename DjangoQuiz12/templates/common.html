@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Common</title>
+</head>
+<body>
+
+
+Welcome {{ user }} <br/><br/>
+
+<a href="{% url 'login' %}">Click here to login</a> <br/><br/>
+<a href="{% url 'signup' %}">Click here to register</a> <br/><br/>
+
+{% if user.is_authenticated %}
+
+    {% if user.is_staff %}
+        <a href="#">Admin Menu</a> <br/><br/>
+    {% else %}
+        <a href="{% url 'index' %}">Play Quiz</a> <br/><br/>
+     {% endif %}
+
+    <a href="{% url 'logout' %}">Logout</a> <br/><br/>
+
+{% endif %}
+
+</body>
+</html>

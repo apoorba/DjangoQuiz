@@ -1,0 +1,62 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="play-quiz-next">
+        {% csrf_token %}
+        <div id="countdowntimer"></div>
+        {% for q in sq %}
+            <input type="hidden" id="userTakenTime">
+            <input type="hidden" name="question" value="{{ q.id }}">
+            <input type="hidden" name="answer" value="{{ q.correct_answer }}">
+
+            <h3>{{ q.question_text }}</h3><br/>
+
+            {#        <input type="radio" name="choice1" value="{{ q.option1 }}">{{ q.option1 }} <br/>#}
+            {#        <input type="radio" name="choice1" value="{{ q.option2 }}">{{ q.option2 }} <br/>#}
+            {#        <input type="radio" name="choice1" value="{{ q.option3 }}">{{ q.option3 }} <br/>#}
+            {#        <input type="radio" name="choice1" value="{{ q.option4 }}">{{ q.option4 }} <br/>#}
+
+            <div class="funkyradio">
+                <div class="funkyradio-default">
+                    <input type="radio" name="choice1" id="radio1" value="{{ q.option1 }}"/>
+                    <label for="radio1">{{ q.option1 }}</label>
+                </div>
+                <div class="funkyradio-primary">
+                    <input type="radio" name="choice1" id="radio2" value="{{ q.option2 }}"/>
+                    <label for="radio2">{{ q.option2 }}</label>
+                </div>
+                <div class="funkyradio-success">
+                    <input type="radio" name="choice1" id="radio3" value="{{ q.option3 }}" />
+                    <label for="radio3">{{ q.option3 }}</label>
+                </div>
+                <div class="funkyradio-danger">
+                    <input type="radio" name="choice1" id="radio4" value="{{ q.option4 }}" />
+                    <label for="radio4">{{ q.option4 }}</label>
+                </div>
+            </div>
+        {% endfor %}
+        <br/>
+        <input type="submit" value="Next">
+    </form>
+
+{% endblock %}
+
+{% block script %}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    var timeleft = 10;
+    var quizTimer = setInterval(function(){
+        timeleft--;
+        document.getElementById("countdowntimer").textContent = timeleft;
+        document.getElementById("userTakenTime").textContent = timeleft;
+        if(timeleft<=0)
+            clearInterval(quizTimer);
+    },1000)
+    </script>
+{% endblock %}

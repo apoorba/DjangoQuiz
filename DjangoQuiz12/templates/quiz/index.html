@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QUIZ INDEX</title>
+</head>
+<body>
+
+
+{% for question in dcat %}
+    {% for category in question %}
+        <a href="play-quiz?category={{ category }}">{{ category }}</a>
+    {% endfor %}
+{% endfor %}
+
+</body>
+</html>
